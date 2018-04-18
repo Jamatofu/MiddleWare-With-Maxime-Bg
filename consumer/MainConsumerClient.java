@@ -33,7 +33,7 @@ public class MainConsumerClient {
         }
 
         try {
-            producerInterface = (ProducerInterface) Naming.lookup(SharedConfig.COMPLETE_URL + SharedConfig.PRODUCER_INTERFACE_NAMING);
+            producerInterface = (ProducerInterface) Naming.lookup(SharedConfig.COMPLETE_URL + "/" + SharedConfig.PRODUCER_INTERFACE_NAMING);
             LOGGER.log(Level.INFO, "Successfully connected to the producer");
         } catch (RemoteException | NotBoundException | MalformedURLException e) {
             LOGGER.log(Level.SEVERE, e.toString());
