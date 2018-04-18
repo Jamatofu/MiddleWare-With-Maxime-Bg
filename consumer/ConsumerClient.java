@@ -12,12 +12,7 @@ import java.util.logging.Logger;
 public class ConsumerClient implements ConsumerInterface {
 
     private static final Logger LOGGER = Logger.getLogger(ConsumerClient.class.getName());
-
-
-    @Override
-    public void receiveData(String data) {
-
-    }
+    private SharedData sharedData;
 
     public static void main(String[] args) {
 
@@ -32,12 +27,28 @@ public class ConsumerClient implements ConsumerInterface {
         Registry registry;
 
         try {
-            producerInterface = (ProducerInterface) Naming.lookup(SharedConfig.COMPLETE_URL + "/" +SharedConfig.PRODUCER_INTERFACE_NAMING);
-            System.out.println("Ok");
-            producerInterface.getUrl("Bonjour c'est moi");
+            producerInterface = (ProducerInterface) Naming.lookup(SharedConfig.COMPLETE_URL + SharedConfig.PRODUCER_INTERFACE_NAMING);
         } catch (RemoteException | NotBoundException | MalformedURLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.toString());
         }
 
+        try {
+            // args[0] contains the identifier of this consumer
+            // example : http://localhost:8080/ConsumerInterface/c0
+            producerInterface.getUrl(SharedConfig.COMPLETE_URL + "/" + SharedConfig.CONSUMER_INTERFACE_NAMING + "/" + args[0]);
+        } catch (RemoteException e) {
+            LOGGER.log(Level.SEVERE, "An exception occurred while trying to contact the producer from consumer");
+        } catch (NullPointerException e) {
+            LOGGER.log(Level.SEVERE, "Couldn't instantiate ProducerInterface stub");
+        }
+
+    }
+
+    @Override
+    public void receiveData(String data) {
+        sharedData = new SharedData();
+        sharedData.setData(data);
+
+        LOGGER.log(Level.INFO, "Received data from producer : " + sharedData.getData());
     }
 }
