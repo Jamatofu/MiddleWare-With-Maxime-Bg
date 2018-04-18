@@ -27,6 +27,8 @@ public class ConsumerClient {
 
         try {
             producerInterface = (ProducerInterface) Naming.lookup("//" + args[0] + "/ProducerInterface");
+            System.out.println("Ok");
+            producerInterface.getUrl("Bonjour c'est moi");
         } catch (RemoteException | NotBoundException | MalformedURLException e) {
             e.printStackTrace();
         }

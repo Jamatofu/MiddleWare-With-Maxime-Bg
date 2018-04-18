@@ -18,9 +18,18 @@ public class ProducerClient extends UnicastRemoteObject implements ProducerInter
         this.url = url;
     }
 
+    private String generateLongString() {
+        StringBuilder sb = new StringBuilder();
+
+        for(int i = 0; i < 100_000; i++) {
+            sb.append("a");
+        }
+
+        return sb.toString();
+    }
+
     public static void main(String[] args) {
         try {
-            LocateRegistry.createRegistry(1099);
             ProducerClient client = new ProducerClient();
 
         } catch (RemoteException e) {
