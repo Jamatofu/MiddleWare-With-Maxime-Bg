@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 /**
  * @author Maxime Flament (maxime.flament@etu.unice.fr)
  */
-public class ConsumerClient {
+public class ConsumerClient implements ConsumerInterface {
 
     private static final Logger LOGGER = Logger.getLogger(ConsumerClient.class.getName());
 
@@ -26,7 +26,7 @@ public class ConsumerClient {
         Registry registry;
 
         try {
-            producerInterface = (ProducerInterface) Naming.lookup("//" + args[0] + "/ProducerInterface");
+            producerInterface = (ProducerInterface) Naming.lookup(SharedConfig.COMPLETE_URL + SharedConfig.PRODUCER_INTERFACE_NAMING);
             System.out.println("Ok");
             producerInterface.getUrl("Bonjour c'est moi");
         } catch (RemoteException | NotBoundException | MalformedURLException e) {
@@ -35,4 +35,8 @@ public class ConsumerClient {
 
     }
 
+    @Override
+    public void receiveData(String data) {
+
+    }
 }
