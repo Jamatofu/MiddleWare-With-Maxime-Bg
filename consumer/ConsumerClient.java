@@ -18,7 +18,7 @@ public class ConsumerClient implements ConsumerInterface {
     public void receiveData(String data) {
 
     }
-    
+
     public static void main(String[] args) {
 
         if (args.length < 1) {
@@ -32,7 +32,7 @@ public class ConsumerClient implements ConsumerInterface {
         Registry registry;
 
         try {
-            producerInterface = (ProducerInterface) Naming.lookup(SharedConfig.COMPLETE_URL + SharedConfig.PRODUCER_INTERFACE_NAMING);
+            producerInterface = (ProducerInterface) Naming.lookup(SharedConfig.COMPLETE_URL + "/" +SharedConfig.PRODUCER_INTERFACE_NAMING);
             System.out.println("Ok");
             producerInterface.getUrl("Bonjour c'est moi");
         } catch (RemoteException | NotBoundException | MalformedURLException e) {
