@@ -1,3 +1,5 @@
+import java.net.MalformedURLException;
+import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -30,9 +32,18 @@ public class ProducerClient extends UnicastRemoteObject implements ProducerInter
 
     public static void main(String[] args) {
         try {
+            LocateRegistry.createRegistry(1099);
             ProducerClient client = new ProducerClient();
 
+            String url = "rmi://localhost/Server";
+            Naming.rebind(url, client);
+            System.out.println("Bind serveur avec l'url suivante : " + url);
+
+            System.out.println("Démarage du serveur");
+
         } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
     }
