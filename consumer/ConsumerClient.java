@@ -13,6 +13,12 @@ public class ConsumerClient implements ConsumerInterface {
 
     private static final Logger LOGGER = Logger.getLogger(ConsumerClient.class.getName());
 
+
+    @Override
+    public void receiveData(String data) {
+
+    }
+    
     public static void main(String[] args) {
 
         if (args.length < 1) {
@@ -32,11 +38,6 @@ public class ConsumerClient implements ConsumerInterface {
         } catch (RemoteException | NotBoundException | MalformedURLException e) {
             e.printStackTrace();
         }
-
-    }
-
-    @Override
-    public void receiveData(String data) {
 
     }
 }
