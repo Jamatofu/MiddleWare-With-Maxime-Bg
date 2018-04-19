@@ -90,8 +90,13 @@ However, in real world, there are packet losses due to multiple factors, and the
 
 The TCP protocol is a heavy one that is fine for data integrity, etc... but is way too heavy when it comes to HTTP Streaming (it slows down the communication).
 
+Over TCP, another solution is to use `InputStream` and `OutputStream`.
+In order to transfer `InputStream` from the producer to the consumer, we need to use the `RemoteInputStream` object from RMIIO, that can be serialized and sent over the network. The chunk of data to write into the `RemoteInputStream` can be `byte[]`.  
+
+A client would open a connection with the server to request some resources, the server would open a `RemoteInputStream` to transfer the data, and the client would use a `RemoteOutputStream` to read the sent chunk of data.
+
 ## Authors
 
-- [mailto:clement.beal@etu.unice.fr](Béal Clément)
-- [mailto:maxime.flament@etu.unice.fr](Flament Maxime)
+- [Béal Clément](mailto:clement.beal@etu.unice.fr)
+- [Flament Maxime](mailto:maxime.flament@etu.unice.fr)
 
